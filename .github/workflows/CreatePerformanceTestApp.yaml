@@ -1,6 +1,6 @@
-name: 'Create a new app'
+name: 'Create a new performance test app'
 
-run-name: "Create a new app in [${{ github.ref_name }}]"
+run-name: "Create a new performance test app in [${{ github.ref_name }}]"
 
 on:
   workflow_dispatch:
@@ -12,14 +12,20 @@ on:
       name:
         description: Name
         required: true
+        default: '<YourAppName>.PerformanceTest'
       publisher:
         description: Publisher
         required: true
       idrange:
-        description: ID range (from..to)
+        description: ID range
         required: true
+        default: '50000..99999'
       sampleCode:
         description: Include Sample code?
+        type: boolean
+        default: true
+      sampleSuite:
+        description: Include Sample BCPT Suite?
         type: boolean
         default: true
       directCommit:
@@ -46,7 +52,7 @@ env:
   ALGoRepoSettings: ${{ vars.ALGoRepoSettings }}
 
 jobs:
-  CreateApp:
+  CreatePerformanceTestApp:
     needs: [ ]
     runs-on: [ ubuntu-latest ]
     steps:
@@ -68,7 +74,6 @@ jobs:
         uses: microsoft/AL-Go-Actions/ReadSettings@v8.0
         with:
           shell: pwsh
-          get: type
 
       - name: Read secrets
         id: ReadSecrets
@@ -79,17 +84,18 @@ jobs:
           getSecrets: 'TokenForPush'
           useGhTokenWorkflowForPush: '${{ github.event.inputs.useGhTokenWorkflow }}'
 
-      - name: Creating a new app
+      - name: Creating a new test app
         uses: microsoft/AL-Go-Actions/CreateApp@v8.0
         with:
           shell: pwsh
           token: ${{ steps.ReadSecrets.outputs.TokenForPush }}
           project: ${{ github.event.inputs.project }}
-          type: ${{ env.type }}
+          type: 'Performance Test App'
           name: ${{ github.event.inputs.name }}
           publisher: ${{ github.event.inputs.publisher }}
           idrange: ${{ github.event.inputs.idrange }}
           sampleCode: ${{ github.event.inputs.sampleCode }}
+          sampleSuite: ${{ github.event.inputs.sampleSuite }}
           directCommit: ${{ github.event.inputs.directCommit }}
 
       - name: Finalize the workflow
