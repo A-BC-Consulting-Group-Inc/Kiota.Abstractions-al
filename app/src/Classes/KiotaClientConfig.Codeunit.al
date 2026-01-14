@@ -115,4 +115,34 @@ codeunit 87107 "Kiota ClientConfig SOHH"
     begin
         this._QueryParameters.Set(ParamName, ParamValue);
     end;
+
+    procedure GetFullUrl(): Text
+    var
+        FullUrl: Text;
+        ParamName: Text;
+        ParamValue: Text;
+        FirstParam: Boolean;
+    begin
+        FullUrl := _BaseURL;
+
+        if _QueryParameters.Count > 0 then begin
+            FirstParam := true;
+            foreach ParamName in _QueryParameters.Keys() do begin
+                ParamValue := _QueryParameters.Get(ParamName);
+
+                if FirstParam then begin
+                    if FullUrl.Contains('?') then
+                        FullUrl += '&'
+                    else
+                        FullUrl += '?';
+                    FirstParam := false;
+                end else
+                    FullUrl += '&';
+
+                FullUrl += ParamName + '=' + ParamValue;
+            end;
+        end;
+
+        exit(FullUrl);
+    end;
 }

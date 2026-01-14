@@ -67,20 +67,27 @@ codeunit 87103 "Kiota RequestHandler SoHH"
 
     procedure RequestMessage(): Codeunit System.RestClient."Http Request Message"
     var
-        Headers: HttpHeaders;
+        RequestHeaders: HttpHeaders;
+        ContentHeaders: HttpHeaders;
     begin
         if RequestMsgSet then
             exit(RequestMsgToCodeunitObject());
         RequestMsg.Method := Format(Method);
-        RequestMsg.SetRequestUri(ClientConfig.BaseUrl());
-        if (ClientConfig.RequestHeaders().Count > 0) then begin
-            RequestMsg.GetHeaders(Headers);
-            RequestHelper.AddHeader(Headers, ClientConfig.RequestHeaders()); // Add custom headers
-        end;
+        RequestMsg.SetRequestUri(ClientConfig.GetFullUrl());
+
+        // Add authorization headers if configured
+        RequestMsg.GetHeaders(RequestHeaders);
+        if ClientConfig.Authorization().IsInitialized() then
+            if not ClientConfig.Authorization().AddAuthorizationHeaders(RequestHeaders) then
+                Error('Failed to acquire OAuth2 authorization token');
+
+        if (ClientConfig.RequestHeaders().Count > 0) then
+            RequestHelper.AddHeader(RequestHeaders, ClientConfig.RequestHeaders()); // Add custom headers
+
         if (BodySet) then begin
             RequestMsg.Content := Content;
-            RequestMsg.Content.GetHeaders(Headers);
-            RequestHelper.AddHeader(Headers, ClientConfig.ContentHeaders()); // Add custom headers
+            RequestMsg.Content.GetHeaders(ContentHeaders);
+            RequestHelper.AddHeader(ContentHeaders, ClientConfig.ContentHeaders()); // Add custom headers
         end;
         exit(RequestMsgToCodeunitObject());
     end;
@@ -95,6 +102,7 @@ codeunit 87103 "Kiota RequestHandler SoHH"
             RestClient.Create(ClientConfig.HttpHandler())
         else
             RestClient.Create();
+
         RqstMessage := RequestMessage();
         RspMessage := RestClient.Send(RqstMessage);
         ClientConfig.Client().Response(RspMessage);
