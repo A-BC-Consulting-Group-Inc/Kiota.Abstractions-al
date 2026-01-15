@@ -15,6 +15,7 @@ codeunit 87107 "Kiota ClientConfig SOHH"
         _Client: Interface "Kiota IApiClient SOHH";
         _HttpHandler: Interface "Http Client Handler";
         _BaseURL: Text;
+        _Path: Text;
 
     procedure BaseURL(URL: Text)
     begin
@@ -32,6 +33,11 @@ codeunit 87107 "Kiota ClientConfig SOHH"
             _BaseURL := Append
         else
             _BaseURL := _BaseURL + Append;
+    end;
+
+    procedure SetPath(Path: Text)
+    begin
+        _Path := Path;
     end;
 
     procedure IsInitialized(): Boolean
@@ -124,6 +130,8 @@ codeunit 87107 "Kiota ClientConfig SOHH"
         FirstParam: Boolean;
     begin
         FullUrl := _BaseURL;
+        if _Path <> '' then
+            FullUrl += _Path;
 
         if _QueryParameters.Count > 0 then begin
             FirstParam := true;

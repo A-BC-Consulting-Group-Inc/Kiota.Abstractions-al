@@ -8,11 +8,13 @@ codeunit 87103 "Kiota RequestHandler SoHH"
         ClientConfig: Codeunit "Kiota ClientConfig SOHH";
         RequestHelper: Codeunit "RequestHelper SOHH";
         BodySet,
-        RequestMsgSet : Boolean;
+        RequestMsgSet,
+        UrlPathSet : Boolean;
         Method: Enum System.RestClient."Http Method";
         Content: HttpContent;
         RequestMsg: HttpRequestMessage;
         BodyAsJson: JsonToken;
+        UrlPath: Text;
 
     procedure SetClientConfig(var NewClientConfig: Codeunit "Kiota ClientConfig SOHH")
     begin
@@ -60,6 +62,12 @@ codeunit 87103 "Kiota RequestHandler SoHH"
         BodySet := true;
     end;
 
+    procedure SetUrlPath(NewUrlPath: Text)
+    begin
+        UrlPath := NewUrlPath;
+        UrlPathSet := true;
+    end;
+
     local procedure RequestMsgToCodeunitObject() msg: Codeunit System.RestClient."Http Request Message"
     begin
         msg.SetHttpRequestMessage(RequestMsg);
@@ -73,6 +81,8 @@ codeunit 87103 "Kiota RequestHandler SoHH"
         if RequestMsgSet then
             exit(RequestMsgToCodeunitObject());
         RequestMsg.Method := Format(Method);
+        if UrlPathSet then
+            ClientConfig.SetPath(UrlPath);
         RequestMsg.SetRequestUri(ClientConfig.GetFullUrl());
 
         // Add authorization headers if configured
