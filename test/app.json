@@ -1,7 +1,7 @@
 {
   "id": "d007a494-ceda-4c80-bece-497cd88cf596",
   "name": "Kiota.Abstractions - Tests",
-  "publisher": "SimonOfHH",
+  "publisher": "A BC Consulting",
   "version": "1.0.0.0",
   "brief": "Kiota.Abstractions - Tests",
   "description": "Kiota.Abstractions - Tests",
@@ -10,12 +10,12 @@
   "help": "https://www.providersample.com/help",
   "url": "https://www.providersample.com",
   "contextSensitiveHelpUrl": "https://www.providersample.com/help",
-  "logo": "Assets/logo.png",
+  "logo": "assets/logo.png",
   "dependencies": [
     {
-      "id": "c24a2609-e5c2-4702-b734-db13e5a6594c",
+      "id": "10bdb5fb-0da1-42a5-87f1-2659fb2bbd6d",
       "name": "Kiota.Abstractions",
-      "publisher": "SimonOfHH",
+      "publisher": "A BC Consulting",
       "version": "1.0.0.0"
     },
     {
