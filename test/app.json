@@ -2,7 +2,7 @@
   "id": "d007a494-ceda-4c80-bece-497cd88cf596",
   "name": "Kiota.Abstractions - Tests",
   "publisher": "A BC Consulting",
-  "version": "1.0.0.0",
+  "version": "1.1.0.0",
   "brief": "Kiota.Abstractions - Tests",
   "description": "Kiota.Abstractions - Tests",
   "privacyStatement": "https://www.providersample.com/data-protection",
@@ -16,7 +16,7 @@
       "id": "10bdb5fb-0da1-42a5-87f1-2659fb2bbd6d",
       "name": "Kiota.Abstractions",
       "publisher": "A BC Consulting",
-      "version": "1.0.0.0"
+      "version": "1.1.0.0"
     },
     {
       "id": "dd0be2ea-f733-4d65-bb34-a28f4624fb14",

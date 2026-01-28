@@ -11,5 +11,6 @@
   "enableAppSourceCop": false,
   "enableExternalRulesets": true,
   "useCompilerFolder": true,
-  "doNotPublishApps": true
+  "doNotPublishApps": true,
+  "repoVersion": "1.1"
 }

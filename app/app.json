@@ -2,7 +2,7 @@
   "id": "10bdb5fb-0da1-42a5-87f1-2659fb2bbd6d",
   "name": "Kiota.Abstractions",
   "publisher": "A BC Consulting",
-  "version": "1.0.0.0",
+  "version": "1.1.0.0",
   "brief": "Provides some base classes and interfaces for Kiota.",
   "description": "This package provides some base functionality for Kiota, including the base classes and interfaces that are used to build the Kiota client.",
   "privacyStatement": "https://www.providersample.com/data-protection",
